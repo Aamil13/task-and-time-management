@@ -1,11 +1,12 @@
-import { Navbar } from "@/components/organisms/navbar";
+"use client";
+
 import { FiClipboard, FiClock, FiBarChart2 } from "react-icons/fi";
+import { useAuthGuard } from "@/hooks/use-auth";
 
 export default function Home() {
+  // useAuthGuard("/dashboard", "redirect-authenticated");
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Navbar />
-
       <main className="flex-1">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
