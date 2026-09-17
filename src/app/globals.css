@@ -104,7 +104,13 @@
    Tailwind Semantic Tokens
    ======================================== */
 
+/* eslint-disable-next-line css/no-at-rule -- @theme is a valid Tailwind CSS v4 feature */
 @theme inline {
+  /* Font Family */
+  --font-family-sans: var(--font-inter), system-ui, sans-serif;
+  --font-family-poppins: var(--font-poppins), system-ui, sans-serif;
+  --font-family-inter: var(--font-inter), monospace;
+
   /* Background */
   --color-background: var(--background);
   --color-background-secondary: var(--background-secondary);
