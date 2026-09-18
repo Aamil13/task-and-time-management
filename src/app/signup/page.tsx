@@ -6,7 +6,7 @@ import { InputBox } from "@/components/atoms/input-box";
 import { InputWarningText } from "@/components/atoms/input-warning-text";
 import { Button } from "@/components/atoms/button";
 import { withInputLengthRules } from "@/lib/validation";
-import { useAuthGuard } from "@/hooks/use-auth";
+
 
 interface SignupForm {
   userName: string;
@@ -16,7 +16,7 @@ interface SignupForm {
 }
 
 export default function SignupPage() {
-  useAuthGuard("/dashboard", "unauthenticated");
+
   const registerUser = useRegister();
 
   const {

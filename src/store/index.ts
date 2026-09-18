@@ -4,12 +4,14 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import type { Store } from "./types";
 import { createThemeSlice } from "./slices/theme-slice";
 import { createAuthSlice } from "./slices/auth-slice";
+import { createTimeSlice } from "./slices/time-slice";
 
 export const useStore = create<Store>()(
   persist(
     (...args) => ({
       ...createThemeSlice(...args),
       ...createAuthSlice(...args),
+      ...createTimeSlice(...args),
     }),
     {
       name: "task-management-store",

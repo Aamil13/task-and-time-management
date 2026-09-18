@@ -20,7 +20,6 @@ export const useLogin = () => {
         error: (err) => getErrorMessage(err),
       }),
     onSuccess: (res: AxiosResponse<AuthResponse>) => {
-      console.log("res", res.data.token)
       setCookie("token", res.data.token);
       store.setAuth(res.data.user);
       router.push("/dashboard");
