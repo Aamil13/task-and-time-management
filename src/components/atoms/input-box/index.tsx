@@ -25,7 +25,7 @@ export function InputBox({
         placeholder={placeholder}
         className={`w-full px-4 py-2 rounded-lg border ${
           err ? "border-error" : "border-border-input"
-        } bg-input placeholder:text-text-placeholder focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors`}
+        } bg-input text-foreground placeholder:text-foreground/50  focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors`}
         {...props}
       />
     </div>

@@ -1,10 +1,12 @@
 "use client";
 
 import { useStore } from "@/store";
-import { useAuthGuard } from "@/hooks/use-auth";
+import { MOCK_TASKS } from "@/constants/mockData";
+import { TaskList } from "@/components/organisms/taskList";
+import Link from "next/link";
+import { FiArrowRightCircle } from "react-icons/fi";
 
 export default function DashboardPage() {
-  useAuthGuard("/login", "authenticated");
   const user = useStore((state) => state.user);
 
   return (
@@ -37,6 +39,22 @@ export default function DashboardPage() {
             <p className="text-3xl font-bold text-info">0h 0m</p>
           </div>
         </div>
+
+
+        <section className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-semibold text-heading">Recent tasks</h2>
+          <Link
+            href="/dashboard/tasks"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80"
+          >
+            View all
+            <FiArrowRightCircle className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+        <TaskList tasks={MOCK_TASKS} limit={5} />
+      </section>
+
       </div>
     </div>
   );

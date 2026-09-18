@@ -1,10 +1,7 @@
 "use client";
-
 import { FiClipboard, FiClock, FiBarChart2 } from "react-icons/fi";
-import { useAuthGuard } from "@/hooks/use-auth";
 
 export default function Home() {
-  // useAuthGuard("/dashboard", "redirect-authenticated");
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1">

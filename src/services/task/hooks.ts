@@ -1,0 +1,81 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createTask, getAllTasks, getTaskById, updateTask, deleteTask } from "./api";
+import type { CreateTaskData, UpdateTaskData } from "./types";
+import type { Task } from "@/types/task";
+import { useCustomToast, getErrorMessage } from "@/lib/toast";
+
+export const useCreateTask = () => {
+  const { showPromise } = useCustomToast();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateTaskData) =>
+      showPromise(createTask(data), {
+        loading: "Creating task...",
+        success: () => "Task created successfully!",
+        error: (err) => getErrorMessage(err),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    mutationKey: ["createTask"],
+  });
+};
+
+export const useGetAllTasks = () => {
+  return useQuery<Task[]>({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const res = await getAllTasks();
+    
+      return res.data?.tasks ?? [];
+    },
+  });
+};
+
+export const useGetTaskById = (id: string) => {
+  return useQuery<Task>({
+    queryKey: ["task", id],
+    queryFn: async () => {
+      const res = await getTaskById(id);
+      return res.data?.task;
+    },
+    enabled: !!id,
+  });
+};
+
+export const useUpdateTask = () => {
+  const { showPromise } = useCustomToast();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateTaskData }) =>
+      showPromise(updateTask(id, data), {
+        loading: "Updating task...",
+        success: () => "Task updated successfully!",
+        error: (err) => getErrorMessage(err),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    mutationKey: ["updateTask"],
+  });
+};
+
+export const useDeleteTask = () => {
+  const { showPromise } = useCustomToast();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) =>
+      showPromise(deleteTask(id), {
+        loading: "Deleting task...",
+        success: () => "Task deleted successfully!",
+        error: (err) => getErrorMessage(err),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    mutationKey: ["deleteTask"],
+  });
+};
