@@ -4,7 +4,7 @@ A full-stack task and time tracking app built with Next.js. Manage tasks, log ti
 
 ## 🔗 Live Demo
 
-**[https://be-task-and-management.vercel.app](https://be-task-and-management.vercel.app)**
+**[https://task-and-time-management.vercel.app/](https://task-and-time-management.vercel.app/)**
 
 ## 🔐 Test Credentials
 
