@@ -16,6 +16,14 @@ export interface TaskResponse {
   task: Task;
 }
 
+export interface PaginationMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface TasksResponse {
   tasks: Task[];
+  pagination: PaginationMeta;
 }

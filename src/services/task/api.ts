@@ -6,8 +6,8 @@ export async function createTask(data: CreateTaskData): Promise<AxiosResponse<Ta
   return client.post<TaskResponse>("/tasks", data);
 }
 
-export async function getAllTasks(): Promise<AxiosResponse<TasksResponse>> {
-  return client.get<TasksResponse>("/tasks");
+export async function getAllTasks(page: number = 1, limit: number = 10): Promise<AxiosResponse<TasksResponse>> {
+  return client.get<TasksResponse>("/tasks", { params: { page, limit } });
 }
 
 export async function getTaskById(id: string): Promise<AxiosResponse<TaskResponse>> {

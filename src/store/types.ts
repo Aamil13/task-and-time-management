@@ -22,7 +22,7 @@ export interface AuthSlice {
   logout: () => void;
 }
 
- export interface TimerSlice {
+export interface TimerSlice {
   activeTaskId: string | null;
   /** ISO 8601 timestamp the active session started at, or null if idle. */
   startedAt: string | null;
@@ -30,8 +30,13 @@ export interface AuthSlice {
   stopTracking: () => void;
 }
 
+export interface UISlice {
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
+  closeSidebar: () => void;
+}
 
-export type Store = ThemeSlice & AuthSlice & TimerSlice;
+export type Store = ThemeSlice & AuthSlice & TimerSlice & UISlice;
 
 export type SliceCreator<T> = StateCreator<
   Store,

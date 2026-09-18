@@ -5,6 +5,7 @@ import type { Store } from "./types";
 import { createThemeSlice } from "./slices/theme-slice";
 import { createAuthSlice } from "./slices/auth-slice";
 import { createTimeSlice } from "./slices/time-slice";
+import { createUISlice } from "./slices/ui-slice";
 
 export const useStore = create<Store>()(
   persist(
@@ -12,6 +13,7 @@ export const useStore = create<Store>()(
       ...createThemeSlice(...args),
       ...createAuthSlice(...args),
       ...createTimeSlice(...args),
+      ...createUISlice(...args),
     }),
     {
       name: "task-management-store",

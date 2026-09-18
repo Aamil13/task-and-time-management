@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createTask, getAllTasks, getTaskById, updateTask, deleteTask } from "./api";
-import type { CreateTaskData, UpdateTaskData } from "./types";
+import type { CreateTaskData, UpdateTaskData, PaginationMeta } from "./types";
 import type { Task } from "@/types/task";
 import { useCustomToast, getErrorMessage } from "@/lib/toast";
 
@@ -22,13 +22,15 @@ export const useCreateTask = () => {
   });
 };
 
-export const useGetAllTasks = () => {
-  return useQuery<Task[]>({
-    queryKey: ["tasks"],
+export const useGetAllTasks = (page: number = 1, limit: number = 10) => {
+  return useQuery<{ tasks: Task[]; pagination: PaginationMeta }>({
+    queryKey: ["tasks", page, limit],
     queryFn: async () => {
-      const res = await getAllTasks();
-    
-      return res.data?.tasks ?? [];
+      const res = await getAllTasks(page, limit);
+      return {
+        tasks: res.data?.tasks ?? [],
+        pagination: res.data?.pagination,
+      };
     },
   });
 };
