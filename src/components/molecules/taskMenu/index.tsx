@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FiEdit2, FiMoreVertical, FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiMoreVertical, FiTrash2, FiClock } from "react-icons/fi";
 
 import { TASK_STATUS_CONFIG, TASK_STATUS_ORDER } from "@/constants/task";
 import type { TaskStatus } from "@/types/task";
@@ -14,10 +14,12 @@ interface TaskMenuProps {
   onEdit?: () => void;
   /** Omit to hide the "Delete task" action. */
   onDelete?: () => void;
+  /** Omit to hide the "See logs" action. */
+  onSeeLogs?: () => void;
 }
 
 /** Small accessible dropdown for per-task actions, opened from a kebab button. */
-export function TaskMenu({ currentStatus, onStatusChange, onEdit, onDelete }: TaskMenuProps) {
+export function TaskMenu({ currentStatus, onStatusChange, onEdit, onDelete, onSeeLogs }: TaskMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +72,21 @@ export function TaskMenu({ currentStatus, onStatusChange, onEdit, onDelete }: Ta
             >
               <FiEdit2 className="h-4 w-4" aria-hidden="true" />
               Edit task
+            </button>
+          )}
+
+          {onSeeLogs && (
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                onSeeLogs();
+                setOpen(false);
+              }}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground hover:bg-background-secondary"
+            >
+              <FiClock className="h-4 w-4" aria-hidden="true" />
+              See logs
             </button>
           )}
 
