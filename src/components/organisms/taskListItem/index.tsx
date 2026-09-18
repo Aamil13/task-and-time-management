@@ -19,6 +19,8 @@ interface TaskListItemProps {
   onDelete?: (taskId: string) => void;
   /** Omit to render the title as plain text (no task-detail route yet). */
   onOpenTask?: (taskId: string) => void;
+  /** Omit to hide the "See logs" menu item. */
+  onSeeLogs?: (taskId: string) => void;
 }
 
 /**
@@ -26,7 +28,7 @@ interface TaskListItemProps {
  * tasks page. Reads the shared timer store directly so every instance of
  * this component agrees on which one task, if any, is being tracked.
  */
-export function TaskListItem({ task, onToggleTracking, onStatusChange, onEdit, onDelete, onOpenTask }: TaskListItemProps) {
+export function TaskListItem({ task, onToggleTracking, onStatusChange, onEdit, onDelete, onOpenTask, onSeeLogs }: TaskListItemProps) {
   const activeTaskId = useStore((state) => state.activeTaskId);
   const startedAt = useStore((state) => state.startedAt);
   const isActive = activeTaskId === task.id;
@@ -106,6 +108,7 @@ export function TaskListItem({ task, onToggleTracking, onStatusChange, onEdit, o
             onStatusChange={(status) => onStatusChange(task.id, status)}
             onEdit={onEdit ? () => onEdit(task.id) : undefined}
             onDelete={onDelete ? () => onDelete(task.id) : undefined}
+            onSeeLogs={onSeeLogs ? () => onSeeLogs(task.id) : undefined}
           />
         </div>
       </div>

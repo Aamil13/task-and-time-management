@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FiClipboard } from "react-icons/fi";
 import { TaskListItem } from "@/components/organisms/taskListItem/index";
 import { TaskListItemSkeleton } from "@/components/molecules/taskSkeleton";
@@ -10,6 +11,7 @@ import { CreateTaskModal } from "@/components/organisms/createTaskModal";
 import { useStore } from "@/store";
 import { useCreateTask, useUpdateTask, useDeleteTask } from "@/services/task";
 import type { Task, TaskStatus } from "@/types/task";
+import { useStartTracking, useStopActiveTracking } from "@/services/time-log";
 
 interface TaskListProps {
   tasks: Task[];
@@ -46,7 +48,11 @@ export function TaskList({
   const activeTaskId = useStore((state) => state.activeTaskId);
   const startTracking = useStore((state) => state.startTracking);
   const stopTracking = useStore((state) => state.stopTracking);
+  const router = useRouter();
 
+
+  const {mutate: startTrackingMutation} =  useStartTracking()
+const {mutate: stopTrackingMutation} = useStopActiveTracking()
   const createTaskMutation = useCreateTask();
   const updateTaskMutation = useUpdateTask();
   const deleteTaskMutation = useDeleteTask();
@@ -54,8 +60,10 @@ export function TaskList({
   function handleToggleTracking(taskId: string) {
     if (activeTaskId === taskId) {
       stopTracking();
+      stopTrackingMutation()
     } else {
       startTracking(taskId);
+      startTrackingMutation(taskId);
     }
   }
 
@@ -88,6 +96,10 @@ export function TaskList({
     const target = tasks.find((task) => task.id === taskId);
     if (!target) return;
     setTaskToEdit(target);
+  }
+
+  function handleSeeLogs(taskId: string) {
+    router.push(`/dashboard/tracking?taskId=${taskId}`);
   }
 
   function handleUpdate(updated: Task) {
@@ -134,6 +146,7 @@ export function TaskList({
             onDelete={handleDelete}
             onEdit={handleEdit}
             onOpenTask={onOpenTask}
+            onSeeLogs={handleSeeLogs}
           />
         ))}
       </ul>

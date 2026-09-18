@@ -37,8 +37,10 @@ export const useGetTaskById = (id: string) => {
   return useQuery<Task>({
     queryKey: ["task", id],
     queryFn: async () => {
-      const res = await getTaskById(id);
-      return res.data?.task;
+      const res:any = await getTaskById(id);
+      const task = res?.data;
+      if (!task) throw new Error(`Task ${id} not found`);
+      return task;
     },
     enabled: !!id,
   });
