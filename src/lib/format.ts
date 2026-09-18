@@ -47,3 +47,24 @@ export function formatDueDate(iso: string): { label: string; tone: DueDateTone }
   if (diffDays === 1) return { label: "Due tomorrow", tone: "neutral" };
   return { label: `Due ${shortDate}`, tone: "neutral" };
 }
+
+
+
+
+
+export function formatTotalDuration(seconds: number | undefined): string {
+  if (!seconds || seconds <= 0) return "—";
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}
