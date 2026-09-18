@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosError } from "axios";
+import axios, { AxiosInstance } from "axios";
 import { getCookie } from "@/lib/cookie";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ;
 
 export const client: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
