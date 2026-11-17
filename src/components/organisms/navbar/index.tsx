@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   FiSearch,
   FiBell,
@@ -16,13 +15,13 @@ import { ThemeToggle } from "@/components/atoms/theme-toggle";
 import { Modal } from "@/components/molecules/modal";
 import { Button } from "@/components/atoms/button";
 import { useStore } from "@/store";
+import { useLogout } from "@/services/auth/hooks";
 
 export function Navbar() {
-  const router = useRouter();
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const user = useStore((state) => state.user);
-  const logout = useStore((state) => state.logout);
   const toggleSidebar = useStore((state) => state.toggleSidebar);
+  const { mutate: logoutMutate } = useLogout();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,10 +46,9 @@ export function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    logout();
     setIsLogoutModalOpen(false);
     setIsMenuOpen(false);
-    router.push("/");
+    logoutMutate();
   };
 
   const initials = user?.name
